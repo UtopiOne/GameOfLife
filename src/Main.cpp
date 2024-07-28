@@ -14,6 +14,14 @@ int main() {
     ClearBackground(BLACK);
     DrawFPS(0, 0);
 
+    for (int i = 0; i <= WIDTH; i += 16) {
+      DrawLine(i, 0, i, HEIGHT, GRAY);
+    }
+
+    for (int i = 0; i <= HEIGHT; i += 16) {
+      DrawLine(0, i, WIDTH, i, GRAY);
+    }
+
     EndDrawing();
   }
 
