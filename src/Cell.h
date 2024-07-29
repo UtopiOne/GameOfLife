@@ -7,4 +7,5 @@ enum class CellState {
 
 struct Cell {
     CellState State = CellState::Dead;
+    CellState NewState;
 };

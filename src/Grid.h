@@ -25,6 +25,8 @@ private:
   GridState m_CurrentState = GridState::Editing;
 
   int m_SelectedTileX, m_SelectedTileY;
+  int m_Generation = 0;
+  int m_Frame = 1;
 
   void UpdateEditing();
   void UpdateRunning();
