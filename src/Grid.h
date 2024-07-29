@@ -2,19 +2,33 @@
 
 #include "Cell.h"
 
+enum class GridState {
+  // Editing initial state
+  Editing,
+  Running,
+  Paused,
+};
+
 template<int width, int height>
 class Grid {
 public:
   Grid() {}
   ~Grid() {}
 
-  void ProcessInput();
+  void Update();
   void Draw();
 
   Cell CellMatrix[width][height];
 
 private:
   bool m_MouseJustPressed = false;
+  GridState m_CurrentState = GridState::Editing;
 
   int m_SelectedTileX, m_SelectedTileY;
+
+  void UpdateEditing();
+  void UpdateRunning();
+  void UpdatePaused();
+
+  int GetNeighboring(int x, int y);
 };

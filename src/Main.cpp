@@ -14,13 +14,11 @@ int main() {
   Grid<WIDTH / CELL_WIDTH, HEIGHT / CELL_HEIGHT> grid;
 
   while (!WindowShouldClose()) {
-    grid.ProcessInput();
+    grid.Update();
 
     BeginDrawing();
       ClearBackground(BLACK);
-
       grid.Draw();
-
       DrawFPS(0, 0);
     EndDrawing();
   }
