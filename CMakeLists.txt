@@ -26,6 +26,8 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(raylib)
 
 add_executable (GameOfLife
-	src/Main.cpp 
+	src/Main.cpp
+  src/Grid.cpp src/Grid.h
+  src/Cell.h
 )
 target_link_libraries(GameOfLife PRIVATE raylib) 
