@@ -8,6 +8,8 @@
 
 int main() {
   InitWindow(WIDTH, HEIGHT, "Game of Life");
+  Image windowIcon = LoadImage("assets/icon.ico");
+  SetWindowIcon(windowIcon);
 
   SetTargetFPS(60);
 

@@ -31,4 +31,5 @@ private:
   void UpdatePaused();
 
   int GetNeighboring(int x, int y);
+  void ClearGrid();
 };
