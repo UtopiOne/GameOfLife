@@ -37,5 +37,6 @@ out/
 # Specific to dev environments
 .vs/
 .idea/
+.vscode/
 compile_commands.json
 .cache/

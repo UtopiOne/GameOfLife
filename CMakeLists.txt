@@ -25,7 +25,7 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(raylib)
 
-add_executable (RaylibGame 
+add_executable (GameOfLife
 	src/Main.cpp 
 )
-target_link_libraries(RaylibGame PRIVATE raylib) 
+target_link_libraries(GameOfLife PRIVATE raylib) 
