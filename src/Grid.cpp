@@ -1,4 +1,6 @@
 #include "Grid.h"
+
+#include "Config.h"
 #include "Cell.h"
 
 #include <raylib.h>

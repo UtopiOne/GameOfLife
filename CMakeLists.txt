@@ -29,5 +29,6 @@ add_executable (GameOfLife
 	src/Main.cpp
   src/Grid.cpp src/Grid.h
   src/Cell.h
+  src/Config.h
 )
 target_link_libraries(GameOfLife PRIVATE raylib) 

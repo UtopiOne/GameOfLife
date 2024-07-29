@@ -1,11 +1,10 @@
 ﻿#include <raylib.h>
 #include <raymath.h>
 
+#include "Config.h"
+
 #include "Grid.h"
 #include "Grid.cpp"
-
-constexpr int WIDTH = 1280;
-constexpr int HEIGHT = 720;
 
 int main() {
   InitWindow(WIDTH, HEIGHT, "Game of Life");
