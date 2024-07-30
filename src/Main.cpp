@@ -7,7 +7,7 @@
 #include "Grid.cpp"
 
 int main() {
-  InitWindow(WIDTH, HEIGHT, "Game of Life");
+  InitWindow(WIDTH, HEIGHT, "Conway's Game of Life");
   Image windowIcon = LoadImage("assets/icon.ico");
   SetWindowIcon(windowIcon);
 

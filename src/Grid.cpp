@@ -9,8 +9,8 @@
 template<int width, int height>
 void Grid<width, height>::Update() {
   Vector2 mousePos = GetMousePosition();
-  m_SelectedTileX = (int)mousePos.x / CELL_WIDTH;
-  m_SelectedTileY = (int)mousePos.y / CELL_HEIGHT;
+  m_SelectedTileX = static_cast<int>(mousePos.x) / CELL_WIDTH;
+  m_SelectedTileY = static_cast<int>(mousePos.y) / CELL_HEIGHT;
 
   if (IsKeyPressed(KEY_R)) {
     ClearGrid();
