@@ -141,7 +141,11 @@ int Grid<width, height>::GetNeighboring(int x, int y) {
 
   for (int i = x - 1; i <= x + 1; i++) {
     for (int j = y - 1; j <= y + 1; j++) {
-      if (CellMatrix[i][j].State == CellState::Alive && !(i == x && j == y)) {
+      if (i > width - 1 && CellMatrix[0][j].State == CellState::Alive && !(i == x && j == y)) {
+        neighboring++;
+      } else if (i < 0 && CellMatrix[width - 1][j].State == CellState::Alive && !(i == x && j == y)) {
+        neighboring++;
+      } else if (CellMatrix[i][j].State == CellState::Alive && !(i == x && j == y)) {
         neighboring++;
       }
     }
