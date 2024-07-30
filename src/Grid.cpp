@@ -3,6 +3,7 @@
 #include "Config.h"
 #include "Cell.h"
 
+#include <iostream>
 #include <raylib.h>
 #include <raymath.h>
 
@@ -32,24 +33,24 @@ void Grid<width, height>::Update() {
 
 template<int width, int height>
 void Grid<width, height>::Draw() {
-  DrawLine(0, 1, WIDTH, 1, GRAY);
-  DrawLine(1, 0, 1, HEIGHT, GRAY);
+  DrawLine(0, 1, WIDTH, 1, GRID_COLOR);
+  DrawLine(1, 0, 1, HEIGHT, GRID_COLOR);
 
   for (int x = 16; x <= WIDTH; x += CELL_WIDTH) {
-    DrawLine(x, 0, x, HEIGHT, GRAY);
+    DrawLine(x, 0, x, HEIGHT, GRID_COLOR);
   }
   for (int y = 16; y <= HEIGHT; y += CELL_HEIGHT) {
-    DrawLine(0, y, WIDTH, y, GRAY);
+    DrawLine(0, y, WIDTH, y, GRID_COLOR);
   }
 
-  for (int x = 0; x < width; x++) {
-    for (int y = 0; y < height; y++) {
+  for (int x = 0; x <= width; x++) {
+    for (int y = 0; y <= height; y++) {
       if (m_SelectedTileX == x && m_SelectedTileY == y) {
-        DrawRectangle(x * CELL_WIDTH, y * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT, GRAY);
+        DrawRectangle(x * CELL_WIDTH, y * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT, HOVERED_CELL_COLOR);
       }
 
       if (CellMatrix[x][y].State == CellState::Alive) {
-        DrawRectangle(x * CELL_WIDTH, y * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT, WHITE);
+        DrawRectangle(x * CELL_WIDTH, y * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT, ALIVE_CELL_COLOR);
       }
     }
   }
@@ -57,20 +58,20 @@ void Grid<width, height>::Draw() {
   if (m_CurrentState == GridState::Running) {
     int textSize = MeasureText("Running...", 40);
     int genSize = MeasureText(TextFormat("Generation: %i", m_Generation), 20);
-    DrawText("Running...", WIDTH / 2 - textSize / 2, 5, 40, RAYWHITE);
-    DrawText(TextFormat("Generation: %i", m_Generation), WIDTH / 2 - genSize / 2, 60, 20, RAYWHITE);
+    DrawText("Running...", WIDTH / 2 - textSize / 2, 5, 40, TEXT_COLOR);
+    DrawText(TextFormat("Generation: %i", m_Generation), WIDTH / 2 - genSize / 2, 60, 20, TEXT_COLOR);
   }
 
   if (m_CurrentState == GridState::Editing) {
     int textSize = MeasureText("Editing. Press SPACE to run.", 40);
-    DrawText("Editing. Press SPACE to run.", WIDTH / 2 - textSize / 2, 5, 40, RAYWHITE);
+    DrawText("Editing. Press SPACE to run.", WIDTH / 2 - textSize / 2, 5, 40, TEXT_COLOR);
   }
 
   if (m_CurrentState == GridState::Paused) {
     int textSize = MeasureText("Paused", 40);
     int genSize = MeasureText(TextFormat("Generation: %i", m_Generation), 20);
-    DrawText("Paused", WIDTH / 2 - textSize / 2, 5, 40, RAYWHITE);
-    DrawText(TextFormat("Generation: %i", m_Generation), WIDTH / 2 - genSize / 2, 60, 20, RAYWHITE);
+    DrawText("Paused", WIDTH / 2 - textSize / 2, 5, 40, TEXT_COLOR);
+    DrawText(TextFormat("Generation: %i", m_Generation), WIDTH / 2 - genSize / 2, 60, 20, TEXT_COLOR);
   }
 }
 
@@ -141,9 +142,9 @@ int Grid<width, height>::GetNeighboring(int x, int y) {
 
   for (int i = x - 1; i <= x + 1; i++) {
     for (int j = y - 1; j <= y + 1; j++) {
-      if (i > width - 1 && CellMatrix[0][j].State == CellState::Alive && !(i == x && j == y)) {
+      if (i == width && CellMatrix[0][j].State == CellState::Alive && !(i == x && j == y)) {
         neighboring++;
-      } else if (i < 0 && CellMatrix[width - 1][j].State == CellState::Alive && !(i == x && j == y)) {
+      } else if (i == -1 && CellMatrix[width - 1][j].State == CellState::Alive && !(i == x && j == y)) {
         neighboring++;
       } else if (CellMatrix[i][j].State == CellState::Alive && !(i == x && j == y)) {
         neighboring++;

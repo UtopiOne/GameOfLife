@@ -19,7 +19,7 @@ int main() {
     grid.Update();
 
     BeginDrawing();
-      ClearBackground(BLACK);
+      ClearBackground(BG_COLOR);
       grid.Draw();
       DrawFPS(0, 0);
     EndDrawing();

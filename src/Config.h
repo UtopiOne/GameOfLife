@@ -10,3 +10,9 @@ constexpr int CELL_HEIGHT = 16;
 
 // Amount of update cycles it takes before the screen updates
 constexpr int SPEED = 10;
+
+#define GRID_COLOR          DARKGRAY
+#define HOVERED_CELL_COLOR  DARKGRAY
+#define ALIVE_CELL_COLOR    WHITE
+#define BG_COLOR            BLACK
+#define TEXT_COLOR          RAYWHITE
