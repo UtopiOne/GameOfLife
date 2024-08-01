@@ -3,7 +3,6 @@
 #include "Config.h"
 #include "Cell.h"
 
-#include <iostream>
 #include <raylib.h>
 #include <raymath.h>
 
@@ -49,7 +48,7 @@ void Grid<width, height>::Draw() {
         DrawRectangle(x * CELL_WIDTH, y * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT, HOVERED_CELL_COLOR);
       }
 
-      if (CellMatrix[x][y].State == CellState::Alive) {
+      if (CellMatrix[x][y].IsAlive) {
         DrawRectangle(x * CELL_WIDTH, y * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT, ALIVE_CELL_COLOR);
       }
     }
@@ -78,13 +77,8 @@ void Grid<width, height>::Draw() {
 template<int width, int height>
 void Grid<width, height>::UpdateEditing() {
   if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !m_MouseJustPressed) {
-    if (CellMatrix[m_SelectedTileX][m_SelectedTileY].State == CellState::Dead) {
-      CellMatrix[m_SelectedTileX][m_SelectedTileY].State = CellState::Alive;
-      m_MouseJustPressed = true;
-    } else {
-      CellMatrix[m_SelectedTileX][m_SelectedTileY].State = CellState::Dead;
-      m_MouseJustPressed = true;
-    }
+    CellMatrix[m_SelectedTileX][m_SelectedTileY].IsAlive = !CellMatrix[m_SelectedTileX][m_SelectedTileY].IsAlive;
+    m_MouseJustPressed = true;
   }
 
   if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON) && m_MouseJustPressed) {
@@ -104,18 +98,18 @@ void Grid<width, height>::UpdateRunning() {
         int neighboring = GetNeighboring(x, y);
 
         if (neighboring < 2 || neighboring > 3) {
-          CellMatrix[x][y].NewState = CellState::Dead;
+          CellMatrix[x][y].IsAliveNextGeneration = false;
         } else if (neighboring == 3) {
-          CellMatrix[x][y].NewState = CellState::Alive;
+          CellMatrix[x][y].IsAliveNextGeneration = true;
         } else {
-          CellMatrix[x][y].NewState = CellMatrix[x][y].State;
+          CellMatrix[x][y].IsAliveNextGeneration = CellMatrix[x][y].IsAlive;
         }
       }
     }
 
     for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
-        CellMatrix[x][y].State = CellMatrix[x][y].NewState;
+        CellMatrix[x][y].IsAlive = CellMatrix[x][y].IsAliveNextGeneration;
       }
     }
 
@@ -142,11 +136,15 @@ int Grid<width, height>::GetNeighboring(int x, int y) {
 
   for (int i = x - 1; i <= x + 1; i++) {
     for (int j = y - 1; j <= y + 1; j++) {
-      if (i == width && CellMatrix[0][j].State == CellState::Alive && !(i == x && j == y)) {
+      if (i == width && CellMatrix[0][j].IsAlive && !(i == x && j == y)) {
         neighboring++;
-      } else if (i == -1 && CellMatrix[width - 1][j].State == CellState::Alive && !(i == x && j == y)) {
+      } else if (i == -1 && CellMatrix[width - 1][j].IsAlive && !(i == x && j == y)) {
         neighboring++;
-      } else if (CellMatrix[i][j].State == CellState::Alive && !(i == x && j == y)) {
+      } else if (j == -1 && CellMatrix[i][height - 1].IsAlive && !(i == x && j == y)) {
+        neighboring++;
+      } else if (j == height && CellMatrix[i][0].IsAlive && !(i == x && j == y)) {
+        neighboring++;
+      } else if (CellMatrix[i][j].IsAlive && !(i == x && j == y) && i != width && i != -1 && j != height && j != -1) {
         neighboring++;
       }
     }
@@ -159,7 +157,7 @@ template<int width, int height>
 void Grid<width, height>::ClearGrid() {
   for (int x = 0; x < width; x++) {
     for (int y = 0; y < height; y++) {
-      CellMatrix[x][y].State = CellState::Dead;
+      CellMatrix[x][y].IsAlive = false;
     }
   }
   m_Generation = 0;
