@@ -33,6 +33,7 @@
 
 # Build folders
 out/
+build/
 
 # Specific to dev environments
 .vs/

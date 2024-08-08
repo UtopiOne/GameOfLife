@@ -9,9 +9,9 @@ enum class GridState {
   Paused,
 };
 
-template<int width, int height>
+template <int width, int height>
 class Grid {
-public:
+ public:
   Grid() {}
   ~Grid() {}
 
@@ -20,7 +20,7 @@ public:
 
   Cell CellMatrix[width][height];
 
-private:
+ private:
   bool m_MouseJustPressed = false;
   GridState m_CurrentState = GridState::Editing;
 

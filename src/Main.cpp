@@ -3,8 +3,8 @@
 
 #include "Config.h"
 
-#include "Grid.h"
 #include "Grid.cpp"
+#include "Grid.h"
 
 int main() {
   InitWindow(WIDTH, HEIGHT, "Conway's Game of Life");
@@ -19,9 +19,9 @@ int main() {
     grid.Update();
 
     BeginDrawing();
-      ClearBackground(BG_COLOR);
-      grid.Draw();
-      DrawFPS(0, 0);
+    ClearBackground(BG_COLOR);
+    grid.Draw();
+    DrawFPS(0, 0);
     EndDrawing();
   }
 
